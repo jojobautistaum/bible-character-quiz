@@ -38,18 +38,12 @@ $(".btn").on("click", function(event) {
     $("#page1").attr("style", "display: none !important");
     $("#timeLeft").text("Time: 75 seconds"); 
     
-    countdown(1);
-    delay();
-
-    
-    buildQuiz(0);    
-
-    
-
+    countdown(5);
 });
 
 function countdown(counter) {
     counter = parseInt(counter);
+    
     var interval = setInterval(function() {
         if (counter > 0) {
             $("#count").text(counter);
@@ -59,17 +53,26 @@ function countdown(counter) {
             clearInterval(interval);
         }
         counter--;
-}, 1000);
+    }, 1000);
+    delay(counter);
+};
 
+function delay(count) {
+    count = parseInt(count);
+    var interval = setTimeout(function() {
+        $("#quiz").attr("style", "display: initial !important");
+        buildQuiz(0); 
+    }, ((count + 1) * 1000));
 };
 
 var timeLeft = 0;
 function setTimer(counter) {
+    
     counter = parseInt(counter);
     if (counter !== -999) {
         timeLeft = counter;
     }
-
+    
     var interval = setInterval(function() {
         if (counter === -999){
             timeLeft -= 15;
@@ -95,11 +98,7 @@ function setTimer(counter) {
     }, 1000);
 };
 
-function delay() {
-    var interval = setTimeout(function() {
-        $("#quiz").attr("style", "display: initial !important");
-}, 2000);
-}
+
 
 
 function buildQuiz(i) {
