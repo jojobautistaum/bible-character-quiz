@@ -103,10 +103,11 @@ function setTimer(counter) {
 
 function messageTimeout(message,i) {
     setTimeout(function() {
-        $("#stat-msg").text(message);
+        $("#msg").text(message);
         i = parseInt(i);
         startQuiz(i);
     }, 1000);
+   
 }
 
 
@@ -128,22 +129,21 @@ function startQuiz(i) {
     $("#opt4").text(questionItems[i].options[3]);
     $(".options").off("click").one("click", function(event) {
         event.preventDefault();
+        // var message = "";
         console.log($(event.currentTarget).text());
             if ($(event.currentTarget).text() === questionItems[i].answer) {
                 console.log ("Correct");
 
-               $("#stat-msg").text("Correct");
+                $("#msg").text("Correct");
             } else {
                 console.log ("Wrong");
-                $("#stat-msg").text("Wrong");
+                $("#msg").text("Wrong");
                 setTimer(-999);
             } 
         // Get the next question
         if ( i < questionItems.length){
             i++;
-            messageTimeout("",i);
-            
-           
+            messageTimeout(" ",i);
 
         }
         

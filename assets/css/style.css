@@ -22,10 +22,16 @@
     color: #C778EB;
 }
 
-#question-border {
-    border-top: 5px solid rgb(197, 197, 197) !important;
+#stat-border {
+    border-top: 5px solid rgb(197, 197, 197);
     margin-left: 20%;
     margin-right: 10%;
+}
+
+#msg {
+    font-size: 1em;
+    color: rgb(161, 161, 161);
+    margin-left: 20%;
 }
 
 .large-fontsize {
@@ -33,8 +39,3 @@
     font-weight: bold;
 }
 
-#stat-msg {
-    margin-left: 20%;
-    font-size: 1em;
-    color: black;
-}
