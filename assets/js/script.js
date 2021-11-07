@@ -26,8 +26,9 @@ var questionItems = [
     }
 ];
 
-// var timeLeft = 0;
+var timeLeft = 0;
 
+// Event listener for Start Quiz button
 $(".btn").on("click", function(event) {
     event.preventDefault();
     
@@ -41,6 +42,7 @@ $(".btn").on("click", function(event) {
     
 });
 
+// Countdown before we will start to show the questions
 function quizCountdown(counter) {
     counter = parseInt(counter);
     
@@ -59,6 +61,7 @@ function quizCountdown(counter) {
     
 };
 
+// Delay to prevent the question to start until after the countdown
 function delay(count) {
     count = parseInt(count);
     var interval = setTimeout(function() {
@@ -67,50 +70,62 @@ function delay(count) {
     }, ((count + 1) * 1000));
 };
 
-var timeLeft = 0;
-function setTimer(counter) {
-    
-    counter = parseInt(counter);
-    if (counter !== -999) {
-        timeLeft = counter;
-    }
-    
-    var interval = setInterval(function() {
-        if (counter === -999){
-            timeLeft -= 15;
-            counter = 0;
-            // clearInterval(interval);
-            // setTimer(timeLeft);
-        }
-
-        if (timeLeft > 1) {
-            $("#timer").text("Time: " + timeLeft + " seconds");
-        }
-        else {
-            if (timeLeft < 0) {
-                timeLeft = 0;
-            }
-            $("#timer").text("Time: " + timeLeft + " second");
-        }
-        if (timeLeft === 0){
-            // run out of time
-            $("#count").text("You run out of time!");
-            clearInterval(interval);
-        }
-        timeLeft--;
-    }, 1000);
-};
-
+// How long the message to display before going to the next question
 function messageTimeout(message,i) {
+    var duration = 1000;
     setTimeout(function() {
+        $("#stat-msg").attr("style", "display: none !important");
         $("#msg").text(message);
         i = parseInt(i);
-        startQuiz(i);
-    }, 1000);
+        if (i > 0) {
+            startQuiz(i);
+        }
+        else {
+            duration = 3000;
+        }
+        }, duration);
    
 }
 
+// Timer for the quiz
+var interval;
+function setTimer(counter) {
+    timeLeft = parseInt(counter);
+    
+    interval = setInterval(function() {
+        checkTimer(1);
 
+    }, 1000);
+};
+
+// Quiz timer countdown. It is also the score of the player
+function checkTimer(seconds){
+    
+    seconds = parseInt(seconds);
+    if (timeLeft < 0) {
+        timeLeft = 0;
+    }
+    
+    if (seconds === 0 || timeLeft === 0){
+        $("#stat-msg").attr("style", "display: initial !important");
+        $("#timer").text("Time: " + timeLeft);
+
+        if (timeLeft === 0) {
+            $("#msg").text("You run out of time!");
+        } else {
+            $("#msg").text("Congratulation! Your score is " + timeLeft);
+        }
+        clearInterval(interval);
+    }
+
+    $("#timer").text("Time: " + timeLeft);
+    timeLeft -= seconds;
+    if (seconds === 15) {
+        seconds = 1;
+    }
+}
+
+// Populating the question and options. Also the checking of the answer
 function startQuiz(i) {
     
     if (i === 0) {
@@ -118,10 +133,10 @@ function startQuiz(i) {
     }
 
     if (i === questionItems.length) {
-        // add code for HS
+        checkTimer(0);
         return;
     }
-    console.log(i);
+    
     $("#question").text(questionItems[i].question);
     $("#opt1").text(questionItems[i].options[0]);
     $("#opt2").text(questionItems[i].options[1]);
@@ -129,17 +144,17 @@ function startQuiz(i) {
     $("#opt4").text(questionItems[i].options[3]);
     $(".options").off("click").one("click", function(event) {
         event.preventDefault();
-        // var message = "";
-        console.log($(event.currentTarget).text());
-            if ($(event.currentTarget).text() === questionItems[i].answer) {
-                console.log ("Correct");
+        $("#stat-msg").attr("style", "display: initial !important");
+        if ($(event.currentTarget).text() === questionItems[i].answer) {
+            console.log ("Correct");
 
-                $("#msg").text("Correct");
-            } else {
-                console.log ("Wrong");
-                $("#msg").text("Wrong");
-                setTimer(-999);
-            } 
+            $("#msg").text("Correct");
+        } else {
+            console.log ("Wrong");
+            $("#msg").text("Wrong");
+            checkTimer(15);
+        } 
+
         // Get the next question
         if ( i < questionItems.length){
             i++;
@@ -150,8 +165,10 @@ function startQuiz(i) {
     });
 }
 
+// Hide div we don't want to see at starting the App
 $(document).ready(function() {
     $("#quiz").attr("style", "display: none !important");
+    $("#stat-msg").attr("style", "display: none !important");
    
 })
 
