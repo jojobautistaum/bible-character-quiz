@@ -32,3 +32,9 @@
     font-size: 8em;
     font-weight: bold;
 }
+
+#stat-msg {
+    margin-left: 20%;
+    font-size: 1em;
+    color: black;
+}

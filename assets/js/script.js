@@ -32,16 +32,16 @@ $(".btn").on("click", function(event) {
     event.preventDefault();
     
     $("#page1").attr("style", "display: initial !important");
-    
-    console.log("You click the button");
-    
+         
     $("#page1").attr("style", "display: none !important");
     $("#timeLeft").text("Time: 75 seconds"); 
     
-    countdown(5);
+    quizCountdown(1);
+    
+    
 });
 
-function countdown(counter) {
+function quizCountdown(counter) {
     counter = parseInt(counter);
     
     var interval = setInterval(function() {
@@ -51,17 +51,19 @@ function countdown(counter) {
         else {
             $("#count").text("");
             clearInterval(interval);
+            
         }
         counter--;
     }, 1000);
     delay(counter);
+    
 };
 
 function delay(count) {
     count = parseInt(count);
     var interval = setTimeout(function() {
         $("#quiz").attr("style", "display: initial !important");
-        buildQuiz(0); 
+        startQuiz(0);
     }, ((count + 1) * 1000));
 };
 
@@ -76,8 +78,9 @@ function setTimer(counter) {
     var interval = setInterval(function() {
         if (counter === -999){
             timeLeft -= 15;
-            clearInterval(interval);
-            setTimer(timeLeft);
+            counter = 0;
+            // clearInterval(interval);
+            // setTimer(timeLeft);
         }
 
         if (timeLeft > 1) {
@@ -98,10 +101,17 @@ function setTimer(counter) {
     }, 1000);
 };
 
+function messageTimeout(message,i) {
+    setTimeout(function() {
+        $("#stat-msg").text(message);
+        i = parseInt(i);
+        startQuiz(i);
+    }, 1000);
+}
 
 
-
-function buildQuiz(i) {
+function startQuiz(i) {
+    
     if (i === 0) {
         setTimer(75);
     }
@@ -116,27 +126,32 @@ function buildQuiz(i) {
     $("#opt2").text(questionItems[i].options[1]);
     $("#opt3").text(questionItems[i].options[2]);
     $("#opt4").text(questionItems[i].options[3]);
-    
     $(".options").off("click").one("click", function(event) {
         event.preventDefault();
         console.log($(event.currentTarget).text());
-        if ($(event.currentTarget).text() === questionItems[i].answer) {
-            console.log ("Correct");
-        } else {
-            console.log ("Wrong");
-            setTimer(-999);
-        } 
-        
+            if ($(event.currentTarget).text() === questionItems[i].answer) {
+                console.log ("Correct");
+
+               $("#stat-msg").text("Correct");
+            } else {
+                console.log ("Wrong");
+                $("#stat-msg").text("Wrong");
+                setTimer(-999);
+            } 
+        // Get the next question
         if ( i < questionItems.length){
             i++;
-            buildQuiz(i);
+            messageTimeout("",i);
+            
+           
+
         }
         
-
     });
 }
 
 $(document).ready(function() {
     $("#quiz").attr("style", "display: none !important");
+   
 })
 
