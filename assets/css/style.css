@@ -3,7 +3,7 @@
     color: white;
 }
 
-.options:hover, .btn:hover {
+.options:hover, .btn:hover, .highest-btn:hover {
     background-color: #C778EB;
 }
 
@@ -41,7 +41,8 @@
 }
 
 #msg {
-    font-size: 1em;
+    font-size: 1.5em;
+    font-style: italic;
     color: rgb(161, 161, 161);
 }
 

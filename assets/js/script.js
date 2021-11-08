@@ -1,40 +1,40 @@
 var questionItems = [
     {
-      question: "Who is Abraham?",
-      options: ["Jacob", "Isaac", "David", "Abraham"],
-      answer: "Abraham"
+      question: "The name Pharaoh gave to Joseph when elevating him to a position next to himself.",
+      options: ["Zephaniah", "Zamzummim", "Zelophehad", "Zaphenath-paneah"],
+      answer: "Zaphenath-paneah"
     },
     {
-      question: "Who is Jacob?",
-      options: ["Jacob", "Isaac", "David", "Abraham"],
-      answer: "Jacob"
+      question: "He is the twin brother of Israel who likes to hunt.",
+      options: ["Isaac", "Jacob", "Edom", "Heth"],
+      answer: "Edom"
     },
     {
-      question: "Who is Isaac?",
-      options: ["Jacob", "Isaac", "David", "Abraham"],
-      answer: "Isaac"
+      question: "Apostle Peter is known for other names, which of the following is not one of these names?",
+      options: ["Symeon", "Simeon", "Simon", "Cephas"],
+      answer: "Simeon"
     },
     {
-      question: "Who is David?",
-      options: ["Jacob", "Isaac", "David", "Abraham"],
-      answer: "David"
+      question: "Which of the following Bible writers who did not write at least five books of the Bible?",
+      options: ["Jeremiah", "Apostle John", "Moses", "Paul"],
+      answer: "Jeremiah"
     },
     {
-      question: "Who is Moses?",
-      options: ["Jacob", "Isaac", "Moses", "Abraham"],
-      answer: "Moses"
+      question: "Who wrote the Bible book of Esther",
+      options: ["Moses", "Esther", "Haman", "Mordecai"],
+      answer: "Mordecai"
     }
 ];
 
 var timeLeft = 0;
+const penalty = 10;
 
 // Event listener for Start Quiz button
 $(".btn").on("click", function(event) {
     event.preventDefault();
     $("#page1").attr("style", "display: none !important");
-    
-    // Start countdown in seconds before the quiz starts
-    quizCountdown(1);
+    // Start countdown with the number of seconds before the quiz starts
+    quizCountdown(5);
 });
 
 // Countdown before we will start to show the questions
@@ -62,9 +62,10 @@ function delay(count) {
     }, ((count + 1) * 1000));
 };
 
-// How long the message to display before going to the next question
+// Show the message in just half a second
 function messageTimeout(message,i) {
     setTimeout(function() {
+        // disable options button while showing the message to avoid error in the program
         $(".options").prop("disabled", true);
         $("#msg").text(message);
         i = parseInt(i);
@@ -93,7 +94,6 @@ function checkTimer(seconds){
     if (timeLeft < 0) {
         timeLeft = 0;
     }
-    
     if (seconds === 0 || timeLeft === 0){
         $("#timer").text("Time: " + timeLeft);
         clearInterval(interval);
@@ -105,9 +105,9 @@ function checkTimer(seconds){
         } 
         $("#score").text("Your final score is " + timeLeft);
     }
-    
     timeLeft -= seconds;
-    if (seconds === 15) {
+    // 10 seconds was deducted for the wrong answer. Set it back to 1 second
+    if (seconds === penalty) {
         seconds = 1;
     }
 }
@@ -124,6 +124,7 @@ function getHighestScore() {
         messageTimeout("The scoreboard is empty!", 0);
     }
     else{
+        // Find the highest score and initial of the player
         var highestScore = localStorage.getItem(localStorage.key(0));
         var keyName = localStorage.key(0);
         if (localStorage.length > 1){
@@ -136,9 +137,11 @@ function getHighestScore() {
         }
         $("#highest").text("1. " + keyName + " - " + highestScore);
     }
+    // Want to clear the scoreboard or play again?
     nextStep();
 }
 
+// Play again or clear the scoreboard
 function nextStep(){
     $(".highest-btn").off("click").one("click", function(event) {
         event.preventDefault(); 
@@ -152,7 +155,6 @@ function nextStep(){
     });
 }
 
-
 // Store score in the localStorage
 function saveScore(score) {
     $("#your-score").attr("style", "display: initial !important");
@@ -160,10 +162,7 @@ function saveScore(score) {
         var key = $("input").first().val();
         var keyExist = localStorage.getItem(key);
         event.preventDefault();
-        console.log(key);
-        console.log(keyExist);
-        console.log(score);
-        // save only if the score of the player is higher than previous
+        // Save to the localStorage only if the score of the player is higher than his previous score
         if (keyExist && score < keyExist){
             score = keyExist;
         }
@@ -175,14 +174,16 @@ function saveScore(score) {
 
 // Populating the question and options. Also the checking of the answer
 function startQuiz(i) {
-
+    // Load our first question
     if (i === 0) {
         setTimer(75);
     }
+    // We reached the end of the questions list
     if (i === questionItems.length) {
         checkTimer(0);
         return;
     }
+    // Populating the quiz question and choices
     $("#question").text(questionItems[i].question);
     $("#opt1").text(questionItems[i].options[0]);
     $("#opt2").text(questionItems[i].options[1]);
@@ -193,12 +194,11 @@ function startQuiz(i) {
         event.preventDefault();
         $("#stat-msg").attr("style", "display: initial !important");
         if ($(event.currentTarget).text() === questionItems[i].answer) {
-            console.log ("Correct");
-            $("#msg").text("Correct");
+            $("#msg").text("Correct!");
         } else {
-            console.log ("Wrong");
-            $("#msg").text("Wrong");
-            checkTimer(15);
+            $("#msg").text("Wrong!");
+            // deduct 10 seconds for wrong answer
+            checkTimer(penalty);
         } 
         // Get the next question
         if ( i < questionItems.length){
@@ -208,6 +208,7 @@ function startQuiz(i) {
     });
 }
 
+// List of items to hide at loading the first page or when show high score
 function hiddenEl() {
     $("#quiz").attr("style", "display: none !important");
     $("#your-score").attr("style", "display: none !important");
@@ -218,6 +219,7 @@ function hiddenEl() {
 // Hide div we don't want to see when starting the App
 $(document).ready(function() {
     hiddenEl();
+    // Listen to the "View high score" hyperlink
     $("#hs").off("click").one("click", function() {
         getHighestScore();
     });
