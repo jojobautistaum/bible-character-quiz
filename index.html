@@ -11,9 +11,9 @@
 <body>
     <main class="min-vh-100 bg-dark d-flex justify-content-center">
         <section class="w-50 bg-white p=5 my-5 rounded">
-            <div class="row p-3">
+            <div class="row p-3" id="heading">
                 <div class="col-6 class">
-                    <p id="hs">View high scores</p>
+                    <a id="hs" href="#high-score">View high scores</a>
                 </div>
                 <div class="col-6 text-dark d-flex justify-content-end">
                     <p id="timer">Time: 0</p>
@@ -33,7 +33,7 @@
             <div class="d-flex justify-content-center item-content-center mt-5">
                 <span id="count" class="large-fontsize"></span>
             </div>
-            <div id="quiz"  class=" d-flex flex-column">
+            <div id="quiz"  class="d-flex flex-column">
                 <div>
                     <h4 id="question"></h4>
                 </div>
@@ -50,6 +50,19 @@
                     <button id="opt4" class="options !important"></button>
                 </div>
             </div>
+            <form id="your-score">
+                <label id="done">All Done!</label></br>
+                <label id="score"></label></br>
+                <label for="initial" id="init">Enter initials</label>
+                <input type="text" id="initial" name="initial">
+                <input type="submit" value="Submit">
+            </form>
+            <form id="high-score">
+                <label id="high-title">High scores</label></br>
+                <label id="highest"> </label></br>
+                <button id="back-btn" class="highest-btn">Go back</button>
+                <button id="clear-btn" class="highest-btn">Clear high scores</button>
+            </form>
             <div id="stat-msg">
                 <div>
                     <p id="stat-border"></p>
@@ -58,7 +71,7 @@
                     <label id="msg"></label></p>
                 </div>
             </div>
-            
+        </section>   
     </main>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>

@@ -1,4 +1,4 @@
-.btn, .options{
+.btn, .options, .highest-btn{
     background-color: rgb(0, 0, 97);
     color: white;
 }
@@ -8,7 +8,6 @@
 }
 
 #question, .options {
-    margin-left: 20%;
     margin-right: 10%;
 }
 
@@ -24,18 +23,38 @@
 
 #stat-border {
     border-top: 5px solid rgb(197, 197, 197);
-    margin-left: 20%;
     margin-right: 10%;
+}
+
+#msg, #stat-border, #back-btn, #highest, #done, #score, 
+#init, #question, #high-title, .options {
+    margin-left: 20%;
+}
+
+#high-title {
+    margin-top: 30%;
+}
+
+#highest {
+    background-color: #D9D3E9;
+    width: 40%;
 }
 
 #msg {
     font-size: 1em;
     color: rgb(161, 161, 161);
-    margin-left: 20%;
+}
+
+#done, #init, #score, #high-title{
+    color: black;
+    font-weight: 800;
+}
+
+#done, #high-title {
+    font-size: 1.5em;
 }
 
 .large-fontsize {
     font-size: 8em;
     font-weight: bold;
 }
-
