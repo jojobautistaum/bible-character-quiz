@@ -32,7 +32,8 @@ const penalty = 10;
 // Event listener for Start Quiz button
 $(".btn").on("click", function(event) {
     event.preventDefault();
-    $("#page1").attr("style", "display: none !important");
+    hideEl("#page1", true);
+    hideEl("#hs", true);
     // Start countdown with the number of seconds before the quiz starts
     quizCountdown(5);
 });
@@ -57,7 +58,8 @@ function quizCountdown(counter) {
 function delay(count) {
     count = parseInt(count);
     var interval = setTimeout(function() {
-        $("#quiz").attr("style", "display: initial !important");
+        hideEl("#quiz", false);
+        hideEl("#hs", false);
         startQuiz(0);
     }, ((count + 1) * 1000));
 };
@@ -70,7 +72,7 @@ function messageTimeout(message,i) {
         $("#msg").text(message);
         i = parseInt(i);
         if (i > 0) {
-            $("#stat-msg").attr("style", "display: none !important");
+            hideEl("#stat-msg", true);
             startQuiz(i);
         }
     }, 500);
@@ -97,10 +99,10 @@ function checkTimer(seconds){
     if (seconds === 0 || timeLeft === 0){
         $("#timer").text("Time: " + timeLeft);
         clearInterval(interval);
-        $("#quiz").attr("style", "display: none !important");
+        hideEl("#quiz", true);
         saveScore(timeLeft);
         if (timeLeft === 0) {
-            $("#stat-msg").attr("style", "display: initial !important");
+            hideEl("#stat-msg", false);
             $("#msg").text("You run out of time!");
         } 
         $("#score").text("Your final score is " + timeLeft);
@@ -114,12 +116,12 @@ function checkTimer(seconds){
 
 // Show high score
 function getHighestScore() {
-    $("#heading").attr("style", "display: none !important");
-    $("#page1").attr("style", "display: none !important");
+    hideEl("#heading", true);
+    hideEl("#page1", true);
     hiddenEl();
-    $("#high-score").attr("style", "display: initial !important");
+    hideEl("#high-score", false);
     if(!localStorage.length){
-        $("#stat-msg").attr("style", "display: initial !important");
+        hideEl("#stat-msg", false);
         $("#highest").text("");
         messageTimeout("The scoreboard is empty!", 0);
     }
@@ -138,17 +140,19 @@ function getHighestScore() {
         $("#highest").text("1. " + keyName + " - " + highestScore);
     }
     // Want to clear the scoreboard or play again?
-    nextStep();
+    playAgain();
 }
 
 // Play again or clear the scoreboard
-function nextStep(){
+function playAgain(){
     $(".highest-btn").off("click").one("click", function(event) {
         event.preventDefault(); 
+        // Clear the scoreboard
         if ($(event.currentTarget).text() === "Clear high scores") {
             localStorage.clear();
             $("#highest").text("");
         }
+        // Play again
         if ($(event.currentTarget).text() === "Go back") {
             window.location.reload();
         }
@@ -157,7 +161,7 @@ function nextStep(){
 
 // Store score in the localStorage
 function saveScore(score) {
-    $("#your-score").attr("style", "display: initial !important");
+    hideEl("#your-score", false);
     $("#your-score").submit(function(event) {
         var key = $("input").first().val();
         var keyExist = localStorage.getItem(key);
@@ -167,7 +171,7 @@ function saveScore(score) {
             score = keyExist;
         }
         localStorage.setItem(key, score);
-        $("#high-score").attr("style", "display: none !important");
+        hideEl("#high-score", true);
         getHighestScore();
     });
 }
@@ -192,7 +196,7 @@ function startQuiz(i) {
     $(".options").prop("disabled", false);
     $(".options").off("click").one("click", function(event) {
         event.preventDefault();
-        $("#stat-msg").attr("style", "display: initial !important");
+        hideEl("#stat-msg", false);
         if ($(event.currentTarget).text() === questionItems[i].answer) {
             $("#msg").text("Correct!");
         } else {
@@ -210,10 +214,20 @@ function startQuiz(i) {
 
 // List of items to hide at loading the first page or when show high score
 function hiddenEl() {
-    $("#quiz").attr("style", "display: none !important");
-    $("#your-score").attr("style", "display: none !important");
-    $("#stat-msg").attr("style", "display: none !important"); 
-    $("#high-score").attr("style", "display: none !important");
+    hideEl("#quiz", true);
+    hideEl("#your-score", true);
+    hideEl("#stat-msg", true);
+    hideEl("#high-score", true);
+}
+
+// Show or hide a section/element/div
+function hideEl(section, hideIt) {
+    if (hideIt){
+        $(section).attr("style", "display: none ! important");
+    }
+    else {
+        $(section).attr("style", "display: initial ! important");
+    }
 }
 
 // Hide div we don't want to see when starting the App
