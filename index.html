@@ -11,6 +11,7 @@
 <body>
     <main class="min-vh-100 bg-dark d-flex justify-content-center">
         <section class="w-50 bg-white p=5 my-5 rounded">
+            <!-- heading -->
             <div class="row p-3" id="heading">
                 <div class="col-6 class">
                     <a id="hs" href="#high-score">View high scores</a>
@@ -19,6 +20,7 @@
                     <p id="timer">Time: 0</p>
                 </div>
             </div>
+            <!-- First Page -->
             <div id="page1" class="d-flex flex-column">
                 <div class="d-flex justify-content-center">
                     <h4>Bible Character Challenge</h4>
@@ -30,9 +32,11 @@
                     <button class="btn text-white">Start Quiz</button>
                 </div>
             </div>
+            <!-- Countdown -->
             <div class="d-flex justify-content-center item-content-center mt-5">
                 <span id="count" class="large-fontsize"></span>
             </div>
+            <!-- Quiz question and selection -->
             <div id="quiz"  class="d-flex flex-column">
                 <div>
                     <h4 id="question"></h4>
@@ -50,6 +54,7 @@
                     <button id="opt4" class="options !important"></button>
                 </div>
             </div>
+            <!-- Show your score -->
             <form id="your-score">
                 <label id="done">All Done!</label><br/>
                 <label id="score"></label><br/>
@@ -57,12 +62,14 @@
                 <input type="text" id="initial" name="initial">
                 <input type="submit" value="Submit">
             </form>
+            <!-- High score stored in the localStorage -->
             <form id="high-score">
                 <label id="high-title">High scores</label><br/>
                 <label id="highest"> </label><br/>
                 <button id="back-btn" class="highest-btn">Go back</button>
                 <button id="clear-btn" class="highest-btn">Clear high scores</button>
             </form>
+            <!-- Message / Feedback -->
             <div id="stat-msg">
                 <div>
                     <p id="stat-border"></p>
