@@ -15,7 +15,7 @@ This is a short quiz that will test your Bible Character knowledge. Your score w
 * Countdown before the quiz start
 * Timed quiz
 * Penalty for wrong answer
-* Accept initial and store scores at the end of the quiz or when the time runs out
+* Store player's initial and score at the end of the quiz or when the time runs out
 * Display high score
 * Clear localStorage
 * Display if the answer is correct or wrong
