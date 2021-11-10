@@ -82,7 +82,6 @@ function messageTimeout(message,i) {
 var interval;
 function setTimer(counter) {
     timeLeft = parseInt(counter);
-    
     interval = setInterval(function() {
         checkTimer(1);
 
@@ -114,7 +113,7 @@ function checkTimer(seconds){
     }
 }
 
-// Show high score
+// Show the highest score regardless of the player
 function getHighestScore() {
     hideEl("#heading", true);
     hideEl("#page1", true);
@@ -159,14 +158,14 @@ function playAgain(){
     });
 }
 
-// Store score in the localStorage
+// Store score and player initial in the localStorage
 function saveScore(score) {
     hideEl("#your-score", false);
     $("#your-score").submit(function(event) {
         var key = $("input").first().val();
         var keyExist = localStorage.getItem(key);
         event.preventDefault();
-        // Save to the localStorage only if the score of the player is higher than his previous score
+        // Save to the localStorage only if the score of the player is higher than his/her previous score
         if (keyExist && score < keyExist){
             score = keyExist;
         }
