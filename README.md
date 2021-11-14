@@ -9,7 +9,6 @@ This is a short quiz that will test your Bible Character knowledge. Your score w
 * Bootstrap
 * JavaScript
 * jQuery
-* Single Page Application
 
 ## Technical Requirements
 * Countdown before the quiz start
@@ -23,9 +22,9 @@ This is a short quiz that will test your Bible Character knowledge. Your score w
 ## Screenshots
 * First Page <br/> ![Page 1](./assets/images/start-page.jpg)
 * Countdown before the quiz <br/> ![Countdown](./assets/images/countdown.jpg)
-* Questions - choices were intentionally hidden for these snaphots
-    - Correct <br/> ![Correct Answer](./assets/images/correct-answer.jpg)
-    - Wrong <br/> ![Wrong Answer](./assets/images/wrong-answer.jpg)
+* Sample question
+    - Correct answer <br/> ![Correct Answer](./assets/images/correct-answer.jpg)
+    - Wrong answer <br/> ![Wrong Answer](./assets/images/wrong-answer.jpg)
 * Time runs out <br/> ![Out of Time](./assets/images/time-runs-out.jpg)
 * Enter initial and show score <br/> ![Your Score](./assets/images/your-score.jpg)
 * View high score <br/> ![High Score](./assets/images/high-score.jpg)
